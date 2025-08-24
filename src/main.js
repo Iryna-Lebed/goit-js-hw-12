@@ -82,7 +82,7 @@ loadMoreBtn.addEventListener("click", async () => {
   try {
     const data = await getImagesByQuery(query, page, per_page);
     createGallery(data.hits);
-    loadMoreIs(totalHits, page);
+    loadMoreIs(totalHits, page, per_page);
     scrollNewContent();
 
     // if (page * per_page >= totalHits) {
@@ -99,5 +99,5 @@ loadMoreBtn.addEventListener("click", async () => {
     hideLoader();
    
   }
-})
+});
 
