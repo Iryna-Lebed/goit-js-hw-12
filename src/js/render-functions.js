@@ -1,14 +1,12 @@
+import iziToast from "izitoast";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector(".gallery");
-const loader = document.querySelector(".loader");
-const loadMoreBtn = document.querySelector(".load-more");
+// const loader = document.querySelector(".loader");
+// const loadMoreBtn = document.querySelector(".load-more");
 
-let lightbox = new SimpleLightbox(".gallery a", {
-  captionsData: "alt",
-  captionDelay: 250,
-});
+let lightbox = new SimpleLightbox(".gallery a");
 
 export function createGallery(images) {
   const markup = images
@@ -45,24 +43,42 @@ export function clearGallery() {
 }
 
 export function showLoader() {
-  loader.classList.remove("is-hidden");
+  document.querySelector('.loader').classList.remove("is-hidden");
 }
 
 export function hideLoader() {
-  loader.classList.add("is-hidden");
+  document.querySelector('.loader').classList.add("is-hidden");
 }
 
 export function showLoadMoreButton() {
-  loadMoreBtn.classList.remove("is-hidden");
+  document.querySelector('.load-more').classList.remove("is-hidden");
 }
 
 export function hideLoadMoreButton() {
-  loadMoreBtn.classList.add("is-hidden");
+ document.querySelector('.load-more').classList.add("is-hidden");
 }
 
-// Прокрутка після підвантаження нових картинок
-export function scrollNewImg() {
-  const { height: cardHeight } = gallery.firstElementChild.getBoundingClientRect();
+export function loadMoreIs(totalHits, page, per_page = 15) {
+    const maxPage = Math.ceil(totalHits / per_page);
+    if (page < maxPage) {
+        showLoadMoreButton();
+    } else {
+        hideLoadMoreButton();
+        iziToast.info({
+            message: "We're sorry, but you've reached the end of search results.",
+        });
+    };
+}
+
+
+
+export function scrollNewContent() {
+    const firstCard = document.querySelector('.gallery').firstElementChild;
+    if (!firstCard) return;
+    const { height: cardHeight } = firstCard.getBoundingClientRect();
+  
+  
+
   window.scrollBy({
     top: cardHeight * 2,
     behavior: "smooth",

@@ -125,3 +125,30 @@ color: #2e2f42;
 .load-more {
   display: none;
 }
+
+.load-more {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0077cc;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin: 20px auto;
+  display: block;
+}
+
+.load-more:hover {
+  background-color: #005fa3;
+}
+
+.load-more:active {
+  background-color: #004b82;
+  transform: scale(0.97);
+}
+
+/* Ховаємо кнопку через клас is-hidden */
+.is-hidden {
+  display: none !important;
+}
