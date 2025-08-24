@@ -148,7 +148,7 @@ color: #2e2f42;
   transform: scale(0.97);
 }
 
-/* Ховаємо кнопку через клас is-hidden */
+
 .is-hidden {
   display: none !important;
 }
