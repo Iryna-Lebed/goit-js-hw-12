@@ -6,39 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
     <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/styles-DD3qoKza.js">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/styles-DvPDDfy5.css">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-BK_rxH-O.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DumFYO8Z.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-DoQnI7Lt.css">
   </head>
   <body>
 
-    
-<header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a class="nav-logo" href="./index.html" aria-label="Site logo">
-        <svg class="nav-logo-icon" width="100" height="30">
-          <use href="/goit-js-hw-12/assets/logo-CWKflIk4.svg"></use>
-        </svg>
-      </a>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-act}" href="./pixabay-api.html">Pixabay</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./render-functions.html">Render</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+        <header>
+      <form class="form">
+        <label>
+          <input
+            type="text"
+            name="search-text"
+            placeholder="Search images..."
+            required
+          />
+        </label>
+        <button type="submit">Search</button>
+      </form>
+    </header>
 
     <main>
-
-      
+      <span class="loader hidden"></span>
+      <ul class="gallery"></ul>
+      <button class="load-more hidden">Load more</button>
+      <span class="loader hidden"></span>
     </main>
 
-
-    
 
   </body>
 </html>
