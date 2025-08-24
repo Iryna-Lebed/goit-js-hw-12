@@ -7,12 +7,121 @@
 /* Common styles */
 @import url('./reset.css');
 @import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+
+body {
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 36px; 
+  margin-bottom: 32px;
+}
+
+
+input[type="text"] {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+input[type="text"]:hover {
+  border-color: #0077cc;
+  box-shadow: 0 0 5px rgba(0, 119, 204, 0.5);
+}
+
+
+input[type="text"]:focus {
+  border-color: #005fa3;
+  box-shadow: 0 0 6px rgba(0, 95, 163, 0.7);
+}
+
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0077cc;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+
+button:hover {
+  background-color: #005fa3;
+}
+
+
+button:active {
+  background-color: #004b82;
+  transform: scale(0.97);
+}
+
+/*  img */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;           
+  gap: 24px;             
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;           
+  justify-content: center;  
+}
+
+.gallery-item img {
+  width: 360px;
+  height: 200px;
+  object-fit: cover; 
+  
+  padding-bottom: 0;
+  display: block;
+  
+}
+
+.gallery-item {
+  width: 360px;            
+  border: 1px solid #808080; 
+       
+  overflow: hidden;         
+  display: flex;
+  flex-direction: column;   
+}
+
+.gallery-item .info {
+  width: 360px;        
+  display: flex;       
+  gap: 28px;           
+  margin-top: 8px; 
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.gallery-item .info p {
+  display: flex;
+  flex-direction: column;  
+  margin: 0;
+  
+  align-items: center;  
+  font-weight: 400;
+font-size: 12px;
+line-height: 2;
+letter-spacing: 0.04em;
+color: #2e2f42;   
+}
+
+.load-more {
+  display: none;
+}
