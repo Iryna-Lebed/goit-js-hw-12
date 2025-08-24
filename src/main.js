@@ -2,14 +2,7 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 import { getImagesByQuery } from "./js/pixabay-api.js";
-import {
-  createGallery,
-  clearGallery,
-  showLoader,
-  hideLoader,
-  showLoadMoreButton,
-  hideLoadMoreButton
-} from "./js/render-functions.js";
+import { createGallery, clearGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton } from "./js/render-functions.js";
 
 const form = document.querySelector(".form");
 const loadMoreBtn = document.querySelector(".load-more");
@@ -17,15 +10,13 @@ const loadMoreBtn = document.querySelector(".load-more");
 let query = "";
 let page = 1;
 let totalHits = 0;
+const per_page = 15;
+let isLoading = false;
 
-// Кнопка спочатку схована
-hideLoadMoreButton();
-
-// Обробка сабміту форми
+// --- Пошук зображень ---
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   query = e.currentTarget.elements["search-text"].value.trim();
-  page = 1;
 
   if (!query) {
     iziToast.error({
@@ -34,35 +25,32 @@ form.addEventListener("submit", async (e) => {
       backgroundColor: "#ff4d4f",
       titleColor: "#fff",
       messageColor: "#fff",
-      position: "topCenter",
+      position: "topRight",
     });
     form.reset();
     return;
   }
 
+  page = 1;
   clearGallery();
   hideLoadMoreButton();
   showLoader();
+  isLoading = true;
 
   try {
-    const data = await getImagesByQuery(query, page);
+    const data = await getImagesByQuery(query, page, per_page);
     totalHits = data.totalHits;
 
     if (data.hits.length === 0) {
       iziToast.info({
         title: "No results",
-        message: "Sorry, there are no images matching your search query. Please try again!",
-        position: "topCenter",
+        message: "Sorry, there are no images matching your search query.",
+        position: "topRight",
       });
       return;
     }
 
     createGallery(data.hits);
-
-    // Показуємо кнопку, якщо є ще результати
-    if (totalHits > page * 15) {
-      showLoadMoreButton();
-    }
 
   } catch (error) {
     iziToast.error({
@@ -71,50 +59,49 @@ form.addEventListener("submit", async (e) => {
       backgroundColor: "#ff4d4f",
       titleColor: "#fff",
       messageColor: "#fff",
-      position: "topCenter",
+      position: "topRight",
     });
   } finally {
     hideLoader();
+    isLoading = false;
     form.reset();
   }
 });
 
-// Обробка кліку по кнопці Load More
+// --- Load More ---
 loadMoreBtn.addEventListener("click", async () => {
+  if (isLoading) return;
   page += 1;
-  hideLoadMoreButton();
   showLoader();
+  isLoading = true;
 
   try {
-    const data = await getImagesByQuery(query, page);
+    const data = await getImagesByQuery(query, page, per_page);
     createGallery(data.hits);
 
-    // Прокрутка вниз після підвантаження
-    const { height } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
-    window.scrollBy({
-      top: height * 2,
-      behavior: "smooth",
-    });
-
-    // Ховаємо кнопку, якщо більше немає елементів
-    if (page * 15 >= totalHits) {
+    if (page * per_page >= totalHits) {
       hideLoadMoreButton();
       iziToast.info({
         title: "End",
         message: "You've reached the end of search results.",
         position: "topCenter",
       });
-    } else {
-      showLoadMoreButton();
     }
-
   } catch (error) {
-    iziToast.error({
-      title: "Error",
-      message: "Something went wrong while loading more images!",
-      position: "topCenter",
-    });
+    iziToast.error({ message: "Error fetching more images" });
   } finally {
     hideLoader();
+    isLoading = false;
+  }
+});
+
+// --- Показ кнопки при скролі донизу ---
+window.addEventListener("scroll", () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+  if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading) {
+    if (page * per_page < totalHits) {
+      showLoadMoreButton();
+    }
   }
 });
